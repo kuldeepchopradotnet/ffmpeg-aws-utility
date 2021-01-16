@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  localstack-s3:
+    image: localstack/localstack:latest
+    container_name: localstack-s3
+    environment:
+     - SERVICES=s3:5002
+     - DEFAULT_REGION=us-west-2
+     - DATA_DIR=/tmp/localstack/data
+    ports:
+     - "9999:8080"
+     - "5002:5002"
+    volumes:
+      - localstack-data:/tmp/localstack
+volumes:
+  localstack-data:
+    name: localstack-data

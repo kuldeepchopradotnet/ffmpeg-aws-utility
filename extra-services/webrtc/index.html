@@ -1,0 +1,77 @@
+<html>
+
+<body>
+    <h4>
+        Test Media Stream
+    </h4>
+
+    <video id="vsrc"></video>
+
+</body>
+
+</html>
+
+<script>
+
+    function init() {
+        streamAndPlay();
+    }
+
+
+    function streamAndPlay() {
+        const constraints = {
+            audio: {
+                channelCount: 1,
+                sampleRate: 16000,
+                sampleSize: 16,
+                volume: 1
+            }
+        }
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .catch(err => serverlog(`ERROR mediaDevices.getUserMedia: ${err}`))
+            .then(stream => {
+                bindStream(stream);
+                const audioTracks = stream.getAudioTracks()
+                if (audioTracks.length !== 1) throw new Error('too many tracks???')
+                const audioTrack = audioTracks[0]
+                audioTrack.applyConstraints(constraints)
+                    .then(() => {
+
+                        const mediaRecorder = new MediaRecorder(stream)
+                        /* etc etc etc */
+                    })
+                    .catch(console.error) /* you might get constraint failure here. */
+            })
+    }
+
+    function recordStream() {
+
+    }
+
+    function getSetting() {
+
+    }
+
+    function bindStream() {
+        let videoNode = document.getElementById('vsrc')
+        videoNode.srcObject = stream;
+        videoNode.onloadedmetadata = function () {
+            videoNode.play();
+            videoNode.muted = true;
+        }
+    }
+
+    function downloadBlob() {
+
+    }
+
+
+
+
+
+
+
+
+
+</script>
